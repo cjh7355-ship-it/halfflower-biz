@@ -29,7 +29,6 @@
 html{scroll-behavior:smooth;}
 body{
   margin:0; background:var(--paper); color:var(--ink);
-  min-width:var(--wrap);
   font-family:var(--sans); font-size:16px; line-height:1.75;
   -webkit-font-smoothing:antialiased;
   letter-spacing:-0.01em;
@@ -37,7 +36,7 @@ body{
 }
 img{max-width:100%; display:block;}
 a{color:inherit;}
-.wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px;}
+.wrap{width:var(--wrap); max-width:100%; margin:0 auto; padding:0 24px;}
 
 /* ── 공통 타이포 ───────────────────────── */
 .eyebrow{
@@ -66,26 +65,13 @@ section{padding:clamp(72px,9vw,120px) 0;}
 .btn-ghost:hover{background:var(--ink); color:var(--paper); transform:translateY(-2px);}
 :focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
 
-/* ── 헤더 ─────────────────────────────── */
-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(239,241,236,.92); backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line);
-}
-.nav{display:flex; align-items:center; justify-content:space-between; height:68px;}
-.logo{font-family:var(--serif); font-size:20px; font-weight:800; letter-spacing:-0.02em; text-decoration:none;}
-.logo span{color:var(--gold); font-size:12px; font-family:var(--sans); letter-spacing:.18em; margin-left:10px; vertical-align:2px;}
-.nav-right{display:flex; align-items:center; gap:22px;}
-.nav-tel{font-weight:700; font-size:15px; text-decoration:none; font-variant-numeric:tabular-nums;}
-.nav .btn{padding:11px 22px; font-size:14px;}
-
 /* ── 히어로 ───────────────────────────── */
 .hero{
   background:var(--stem-deep); color:var(--paper-2);
   padding:clamp(80px,11vw,140px) 0 clamp(72px,9vw,110px);
   position:relative; overflow:hidden;
 }
-.hero-grid{display:grid; grid-template-columns:1fr 250px; gap:48px; align-items:center;}
+.hero-grid{display:grid; grid-template-columns:1fr 170px; gap:56px; align-items:center;}
 .hero h1{
   font-family:var(--serif); font-weight:800;
   font-size:clamp(32px,5.2vw,58px); line-height:1.28; letter-spacing:-0.045em;
@@ -97,7 +83,7 @@ header{
 .hero .btn-ghost{color:var(--paper-2); border-color:rgba(247,248,245,.5);}
 .hero .btn-ghost:hover{background:var(--paper-2); color:var(--stem-deep);}
 .hero-facts{
-  display:flex; gap:36px; flex-wrap:wrap;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:36px;
   padding-top:28px; border-top:1px solid rgba(247,248,245,.18);
 }
 .hero-facts div{font-size:14px; color:#AEB9AE;}
@@ -212,16 +198,6 @@ header{
 </style>
 </head>
 <body>
-
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#">하프플라워<span>BUSINESS</span></a>
-    <div class="nav-right">
-      <a class="nav-tel" href="tel:1588-1360">1588-1360</a>
-      <a class="btn btn-primary" href="#apply">제휴 상담 신청</a>
-    </div>
-  </div>
-</header>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
