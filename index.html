@@ -417,16 +417,60 @@ section{padding:clamp(72px,9vw,120px) 0;}
     </div>
 
     <div class="form-main">
-      <div class="apply-box">
-        <p class="apply-eyebrow">작성 2분 · 영업일 기준 하루 안에 회신</p>
-        <button type="button" class="btn btn-primary apply-cta" data-open-apply>상담 신청서 작성하기</button>
-        <ul class="apply-list">
-          <li>회사명 · 담당자명 · 연락처 · 이메일</li>
-          <li>상담 유형과 월 예상 물량</li>
-          <li>필요하신 품목이나 결제 조건 (선택)</li>
-        </ul>
-        <p class="apply-note">전화가 편하시면 <a href="tel:1588-1360" style="color:var(--stem);font-weight:600;">1588-1360</a>으로 바로 주셔도 됩니다.</p>
-      </div>
+      <form id="applyForm" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label for="company">회사명 <span class="req">*</span></label>
+            <input id="company" name="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
+          </div>
+          <div class="field">
+            <label for="name">담당자명 <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="홍길동" autocomplete="name" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="tel">연락처 <span class="req">*</span></label>
+            <input id="tel" name="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="email">이메일 <span class="req">*</span></label>
+            <input id="email" name="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="type">상담 유형 <span class="req">*</span></label>
+            <select id="type" name="type">
+              <option>임직원 경조사 (결혼·조사 화환)</option>
+              <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
+              <option>승진·취임·개업 축하 (난·화분)</option>
+              <option>행사 · 공간 장식</option>
+              <option>기타</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="volume">월 예상 물량</label>
+            <select id="volume" name="volume">
+              <option>아직 모르겠습니다</option>
+              <option>월 10건 미만</option>
+              <option>월 10 – 30건</option>
+              <option>월 30건 이상</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="memo">상담 내용</label>
+          <textarea id="memo" name="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
+        </div>
+        <label class="agree">
+          <input id="agree" name="agree" type="checkbox" style="margin-top:5px;">
+          <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
+        </label>
+        <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-alt">전화가 편하시면 <a href="tel:1588-1360">1588-1360</a>으로 바로 주셔도 됩니다.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -438,76 +482,66 @@ section{padding:clamp(72px,9vw,120px) 0;}
   <button type="button" class="mclose" id="mclose" aria-label="닫기">&times;</button>
   <p class="mtitle" id="mtitle">제휴 상담 신청</p>
   <p class="msub">남겨주시면 담당자가 영업일 기준 하루 안에 연락드립니다.</p>
-      <form id="applyForm" novalidate>
-      <div class="row2">
-        <div class="field">
-          <label for="company">회사명 <span class="req">*</span></label>
-          <input id="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
-        </div>
-        <div class="field">
-          <label for="name">담당자명 <span class="req">*</span></label>
-          <input id="name" type="text" placeholder="홍길동" autocomplete="name" required>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label for="tel">연락처 <span class="req">*</span></label>
-          <input id="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
-        </div>
-        <div class="field">
-          <label for="email">이메일 <span class="req">*</span></label>
-          <input id="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label for="type">상담 유형 <span class="req">*</span></label>
-          <select id="type">
-            <option>임직원 경조사 (결혼·조사 화환)</option>
-            <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
-            <option>승진·취임·개업 축하 (난·화분)</option>
-            <option>행사 · 공간 장식</option>
-            <option>기타</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="volume">월 예상 물량</label>
-          <select id="volume">
-            <option>아직 모르겠습니다</option>
-            <option>월 10건 미만</option>
-            <option>월 10 – 30건</option>
-            <option>월 30건 이상</option>
-          </select>
-        </div>
+  <form id="applyFormModal" novalidate>
+    <div class="row2">
+      <div class="field">
+        <label for="m-company">회사명 <span class="req">*</span></label>
+        <input id="m-company" name="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
       </div>
       <div class="field">
-        <label for="memo">상담 내용</label>
-        <textarea id="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
+        <label for="m-name">담당자명 <span class="req">*</span></label>
+        <input id="m-name" name="name" type="text" placeholder="홍길동" autocomplete="name" required>
       </div>
-      <label class="agree">
-        <input id="agree" type="checkbox" style="margin-top:5px;">
-        <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
-      </label>
-      <button id="submitBtn" class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
-      <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
-      <p class="form-alt">전화가 편하시면 <a href="tel:1588-1360">1588-1360</a>으로 바로 주셔도 됩니다.</p>
-    </form>
-    <iframe name="gformSink" title="전송 처리용" style="display:none;width:0;height:0;border:0;"></iframe>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="m-tel">연락처 <span class="req">*</span></label>
+        <input id="m-tel" name="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
+      </div>
+      <div class="field">
+        <label for="m-email">이메일 <span class="req">*</span></label>
+        <input id="m-email" name="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="m-type">상담 유형 <span class="req">*</span></label>
+        <select id="m-type" name="type">
+          <option>임직원 경조사 (결혼·조사 화환)</option>
+          <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
+          <option>승진·취임·개업 축하 (난·화분)</option>
+          <option>행사 · 공간 장식</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="m-volume">월 예상 물량</label>
+        <select id="m-volume" name="volume">
+          <option>아직 모르겠습니다</option>
+          <option>월 10건 미만</option>
+          <option>월 10 – 30건</option>
+          <option>월 30건 이상</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="m-memo">상담 내용</label>
+      <textarea id="m-memo" name="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
+    </div>
+    <label class="agree">
+      <input id="m-agree" name="agree" type="checkbox" style="margin-top:5px;">
+      <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
+    </label>
+    <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </form>
 </div>
 
 <script>
 (function(){
   /* ── 상담 신청 → 구글 폼 ────────────────────────────────────────────
-     구글 폼: https://forms.gle/nujcdbRUTJp31zVW9
-
-     아래 두 값을 채우면 이 폼의 입력이 구글 폼으로 그대로 넘어갑니다.
-     구글 폼 → 우상단 ⋮ → "미리 채워진 링크 가져오기" → 각 칸에 아무 값이나
-     넣고 [링크 생성] → 나오는 주소에 필요한 값이 전부 들어 있습니다.
-
-       https://docs.google.com/forms/d/e/<FORM_ID>/viewform?usp=pp_url
-         &entry.1111111=회사명값&entry.2222222=담당자값&...
-
-     비워두면 신청 버튼이 구글 폼을 새 창으로 여는 방식으로 동작합니다. */
+     페이지 하단의 폼과 팝업 안의 폼, 두 벌 모두 같은 구글 폼으로 보낸다.
+     입력칸은 id가 아니라 name으로 찾으므로 두 폼이 id 충돌 없이 공존한다. */
   var FORM_ID = "1FAIpQLSdDMcKJulsa9wnvFReQtKhsbmMbBEYNH3VtBMpMbohQ9Dfomg";
   var ENTRY = {
     company: "entry.315410785",    // 회사명
@@ -520,14 +554,13 @@ section{padding:clamp(72px,9vw,120px) 0;}
     agree:   "entry.1356279822"    // 개인정보 수집·이용 동의
   };
   var FALLBACK_URL = "https://forms.gle/nujcdbRUTJp31zVW9";
-
-  var form = document.getElementById('applyForm');
-  if(!form) return;
+  var TEL  = /^[0-9()+\-\s]{9,20}$/;
+  var MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   /* ── 레이어 팝업 ────────────────────────────────────────────────
      이 페이지는 iframe에 콘텐츠 전체 높이로 얹히기 때문에 position:fixed
      중앙 정렬을 쓰면 화면 밖에 뜬다. 문서 기준 absolute로 두고, 누른
-     버튼 위치에 맞춰 top을 계산한다. */
+     버튼을 위아래 가운데 두도록 top을 계산한다. */
   var bg = document.getElementById('mbg');
   var modal = document.getElementById('applyModal');
   var lastTrigger = null;
@@ -540,8 +573,6 @@ section{padding:clamp(72px,9vw,120px) 0;}
     bg.style.height = docHeight() + 'px';
     bg.classList.add('on');
     modal.classList.add('on');
-    /* 누른 버튼을 위아래 가운데 두도록 배치한다.
-       버튼 위치가 곧 사용자가 보고 있는 지점이기 때문. */
     var r = trigger ? trigger.getBoundingClientRect() : null;
     var center = r ? r.top + window.pageYOffset + r.height / 2 : 400;
     var top = center - modal.offsetHeight / 2;
@@ -564,101 +595,98 @@ section{padding:clamp(72px,9vw,120px) 0;}
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && modal.classList.contains('on')) closeModal();
   });
-  var btn = document.getElementById('submitBtn');
-  var statusEl = document.getElementById('formStatus');
-  var TEL  = /^[0-9()+\-\s]{9,20}$/;
-  var MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function setStatus(msg, kind){
-    statusEl.textContent = msg;
-    statusEl.className = 'form-status' + (kind ? ' ' + kind : '');
-  }
-  function wrapOf(el){ return el.closest('.field') || el.closest('.agree'); }
-  function val(id){ return document.getElementById(id).value.trim(); }
+  /* ── 폼 한 벌을 배선한다 ──────────────────────────────────────── */
+  function wireForm(form, onDone){
+    if(!form) return;
+    var btn = form.querySelector('button[type="submit"]');
+    var statusEl = form.querySelector('.form-status');
+    var f = form.elements;
 
-  function validate(){
-    form.querySelectorAll('.is-error').forEach(function(n){ n.classList.remove('is-error'); });
-    var bad = null;
-    [['company','회사명을 입력해 주세요.'],
-     ['name','담당자명을 입력해 주세요.'],
-     ['tel','연락처를 입력해 주세요.'],
-     ['email','이메일을 입력해 주세요.']].forEach(function(pair){
-      if(!bad && !val(pair[0])) bad = [document.getElementById(pair[0]), pair[1]];
+    function setStatus(msg, kind){
+      statusEl.textContent = msg;
+      statusEl.className = 'form-status' + (kind ? ' ' + kind : '');
+    }
+    function val(n){ return (f[n].value || '').trim(); }
+    function wrapOf(el){ return el.closest('.field') || el.closest('.agree'); }
+
+    function validate(){
+      form.querySelectorAll('.is-error').forEach(function(n){ n.classList.remove('is-error'); });
+      var bad = null;
+      [['company','회사명을 입력해 주세요.'],
+       ['name','담당자명을 입력해 주세요.'],
+       ['tel','연락처를 입력해 주세요.'],
+       ['email','이메일을 입력해 주세요.']].forEach(function(pair){
+        if(!bad && !val(pair[0])) bad = [f[pair[0]], pair[1]];
+      });
+      if(!bad && !TEL.test(val('tel')))    bad = [f.tel,   '연락처 형식을 확인해 주세요.'];
+      if(!bad && !MAIL.test(val('email'))) bad = [f.email, '이메일 형식을 확인해 주세요.'];
+      if(!bad && !f.agree.checked)         bad = [f.agree, '개인정보 수집·이용에 동의해 주세요.'];
+      if(bad){
+        var w = wrapOf(bad[0]);
+        if(w) w.classList.add('is-error');
+        setStatus(bad[1], 'err');
+        bad[0].focus();
+        return false;
+      }
+      return true;
+    }
+
+    /* 구글 폼은 응답을 읽을 수 없게 막아두므로, 숨긴 iframe으로 POST하고
+       그 iframe의 load 이벤트를 전송 완료 신호로 쓴다. */
+    function send(data){
+      var sink = document.getElementsByName('gformSink')[0];
+      var relay = document.createElement('form');
+      relay.action = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
+      relay.method = 'POST';
+      relay.target = 'gformSink';
+      relay.style.display = 'none';
+      Object.keys(data).forEach(function(key){
+        if(!ENTRY[key] || !data[key]) return;
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = ENTRY[key];
+        input.value = data[key];
+        relay.appendChild(input);
+      });
+      document.body.appendChild(relay);
+
+      var done = false;
+      function finish(){
+        if(done) return;
+        done = true;
+        sink.removeEventListener('load', finish);
+        document.body.removeChild(relay);
+        form.reset();
+        btn.disabled = false;
+        setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
+        if(onDone) onDone();
+      }
+      sink.addEventListener('load', finish);
+      setTimeout(finish, 4000);   /* load가 안 잡히는 브라우저 대비 */
+      relay.submit();
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!validate()) return;
+      if(!FORM_ID || !ENTRY.company){
+        window.open(FALLBACK_URL, '_blank', 'noopener');
+        setStatus('새 창에서 신청서를 열었습니다. 창이 뜨지 않으면 팝업 차단을 확인해 주세요.', '');
+        return;
+      }
+      btn.disabled = true;
+      setStatus('보내는 중입니다…', '');
+      send({
+        company: val('company'), name: val('name'), tel: val('tel'), email: val('email'),
+        type: f.type.value, volume: f.volume.value, memo: val('memo'), agree: '동의합니다'
+      });
     });
-    if(!bad && !TEL.test(val('tel')))    bad = [document.getElementById('tel'),   '연락처 형식을 확인해 주세요.'];
-    if(!bad && !MAIL.test(val('email'))) bad = [document.getElementById('email'), '이메일 형식을 확인해 주세요.'];
-    if(!bad && !document.getElementById('agree').checked)
-      bad = [document.getElementById('agree'), '개인정보 수집·이용에 동의해 주세요.'];
-    if(bad){
-      var w = wrapOf(bad[0]);
-      if(w) w.classList.add('is-error');
-      setStatus(bad[1], 'err');
-      bad[0].focus();
-      return false;
-    }
-    return true;
   }
 
-  /* 구글 폼은 응답을 읽을 수 없게 막아두므로, 숨긴 iframe으로 POST하고
-     그 iframe의 load 이벤트를 전송 완료 신호로 씁니다. */
-  function sendToGoogleForm(data){
-    var sink = document.getElementsByName('gformSink')[0];
-    var f = document.createElement('form');
-    f.action = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
-    f.method = 'POST';
-    f.target = 'gformSink';
-    f.style.display = 'none';
-    Object.keys(data).forEach(function(key){
-      if(!ENTRY[key] || !data[key]) return;
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = ENTRY[key];
-      input.value = data[key];
-      f.appendChild(input);
-    });
-    document.body.appendChild(f);
-
-    var done = false;
-    function finish(){
-      if(done) return;
-      done = true;
-      sink.removeEventListener('load', finish);
-      document.body.removeChild(f);
-      form.reset();
-      btn.disabled = false;
-      setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
-      setTimeout(function(){ if(modal.classList.contains('on')) closeModal(); }, 2600);
-    }
-    sink.addEventListener('load', finish);
-    setTimeout(finish, 4000);   /* load가 안 잡히는 브라우저 대비 */
-    f.submit();
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if(!validate()) return;
-
-    var data = {
-      company: val('company'),
-      name:    val('name'),
-      tel:     val('tel'),
-      email:   val('email'),
-      type:    document.getElementById('type').value,
-      volume:  document.getElementById('volume').value,
-      memo:    val('memo'),
-      agree:   '동의합니다'
-    };
-
-    if(!FORM_ID || !ENTRY.company){
-      /* 아직 연결 전 — 구글 폼을 새 창으로 열어 직접 작성하게 한다 */
-      window.open(FALLBACK_URL, '_blank', 'noopener');
-      setStatus('새 창에서 신청서를 열었습니다. 창이 뜨지 않으면 팝업 차단을 확인해 주세요.', '');
-      return;
-    }
-
-    btn.disabled = true;
-    setStatus('보내는 중입니다…', '');
-    sendToGoogleForm(data);
+  wireForm(document.getElementById('applyForm'));
+  wireForm(document.getElementById('applyFormModal'), function(){
+    setTimeout(function(){ if(modal.classList.contains('on')) closeModal(); }, 2600);
   });
 })();
 </script>
