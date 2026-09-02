@@ -196,6 +196,43 @@ section{padding:clamp(72px,9vw,120px) 0;}
 .form-alt a{color:var(--stem); font-weight:600;}
 .btn[disabled]{opacity:.55; cursor:default; transform:none;}
 
+/* ── 신청 패널 ─────────────────────────── */
+.apply-box{border:1px solid var(--line); background:var(--paper); padding:40px 38px;}
+.apply-eyebrow{margin:0 0 20px; font-size:13px; letter-spacing:.08em; color:var(--gold); font-weight:700;}
+.apply-cta{width:100%; justify-content:center; font-size:17px; padding:19px 30px;}
+.apply-list{margin:28px 0 0; padding:20px 0 0; list-style:none; border-top:1px solid var(--line);}
+.apply-list li{font-size:15px; color:var(--gray); padding-left:16px; position:relative; margin-bottom:9px;}
+.apply-list li::before{content:"·"; position:absolute; left:3px; color:var(--gold); font-weight:700;}
+.apply-list li:last-child{margin-bottom:0;}
+.apply-note{margin:22px 0 0; font-size:13px; color:var(--gray);}
+
+/* ── 레이어 팝업 ───────────────────────── */
+/* iframe 안에서는 화면 기준 고정 위치를 쓸 수 없어(높이가 콘텐츠 전체),
+   문서 기준 absolute로 두고 누른 버튼 위치에 맞춰 top을 계산한다. */
+.mbg{position:absolute; left:0; top:0; width:100%; background:rgba(21,32,27,.62); z-index:100; display:none;}
+.mbg.on{display:block;}
+.modal{
+  position:absolute; left:50%; width:620px; margin-left:-310px; z-index:101; display:none;
+  background:var(--paper-2); border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,.38); padding:34px 36px 30px;
+}
+.modal.on{display:block;}
+.modal .mtitle{font-size:22px; font-weight:800; letter-spacing:-0.035em; margin:0 0 6px;}
+.modal .msub{margin:0 0 22px; font-size:14px; color:var(--gray);}
+.mclose{
+  position:absolute; top:14px; right:16px; width:32px; height:32px; padding:0;
+  border:0; background:transparent; cursor:pointer; font-size:24px; line-height:1; color:var(--gray);
+}
+.mclose:hover{color:var(--ink);}
+.modal .field{margin-bottom:14px;}
+.modal .field label{font-size:12px; margin-bottom:6px;}
+.modal .field input, .modal .field select, .modal .field textarea{padding:10px 12px; font-size:14px;}
+.modal .field textarea{min-height:76px;}
+.modal .row2{gap:12px;}
+.modal .agree{margin:16px 0 0; font-size:12px;}
+.modal .btn{margin-top:16px;}
+.modal .form-alt{margin:10px 0 0; font-size:12px;}
+
 </style>
 </head>
 <body>
@@ -208,7 +245,7 @@ section{padding:clamp(72px,9vw,120px) 0;}
       <h1>축하도 조문도,<br>결국 <em>회사 이름</em>으로 나갑니다.</h1>
       <p class="lead">그래서 늦어도 안 되고, 매번 품질이 달라도 안 됩니다. 임직원 경조사부터 거래처 축하까지, 하프플라워가 한 곳에서 맡겠습니다.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="https://forms.gle/nujcdbRUTJp31zVW9" target="_blank" rel="noopener">제휴 상담 신청하기</a>
+        <button type="button" class="btn btn-primary" data-open-apply>제휴 상담 신청하기</button>
         <a class="btn btn-ghost" href="halfflower-proposal.pdf" target="_blank" rel="noopener" download="하프플라워 기업제휴 제안서.pdf">제안서 내려받기 (PDF)</a>
       </div>
       <div class="hero-facts">
@@ -380,66 +417,83 @@ section{padding:clamp(72px,9vw,120px) 0;}
     </div>
 
     <div class="form-main">
-      <form id="applyForm" novalidate>
-        <div class="row2">
-          <div class="field">
-            <label for="company">회사명 <span class="req">*</span></label>
-            <input id="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
-          </div>
-          <div class="field">
-            <label for="name">담당자명 <span class="req">*</span></label>
-            <input id="name" type="text" placeholder="홍길동" autocomplete="name" required>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="tel">연락처 <span class="req">*</span></label>
-            <input id="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
-          </div>
-          <div class="field">
-            <label for="email">이메일 <span class="req">*</span></label>
-            <input id="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="type">상담 유형 <span class="req">*</span></label>
-            <select id="type">
-              <option>임직원 경조사 (결혼·조사 화환)</option>
-              <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
-              <option>승진·취임·개업 축하 (난·화분)</option>
-              <option>행사 · 공간 장식</option>
-              <option>기타</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="volume">월 예상 물량</label>
-            <select id="volume">
-              <option>아직 모르겠습니다</option>
-              <option>월 10건 미만</option>
-              <option>월 10 – 30건</option>
-              <option>월 30건 이상</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="memo">상담 내용</label>
-          <textarea id="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
-        </div>
-        <label class="agree">
-          <input id="agree" type="checkbox" style="margin-top:5px;">
-          <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
-        </label>
-        <button id="submitBtn" class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
-        <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
-        <p class="form-alt">전화가 편하시면 <a href="tel:1588-1360">1588-1360</a>으로 바로 주셔도 됩니다.</p>
-      </form>
-      <iframe name="gformSink" title="전송 처리용" style="display:none;width:0;height:0;border:0;"></iframe>
+      <div class="apply-box">
+        <p class="apply-eyebrow">작성 2분 · 영업일 기준 하루 안에 회신</p>
+        <button type="button" class="btn btn-primary apply-cta" data-open-apply>상담 신청서 작성하기</button>
+        <ul class="apply-list">
+          <li>회사명 · 담당자명 · 연락처 · 이메일</li>
+          <li>상담 유형과 월 예상 물량</li>
+          <li>필요하신 품목이나 결제 조건 (선택)</li>
+        </ul>
+        <p class="apply-note">전화가 편하시면 <a href="tel:1588-1360" style="color:var(--stem);font-weight:600;">1588-1360</a>으로 바로 주셔도 됩니다.</p>
+      </div>
     </div>
   </div>
 </section>
 
 
+
+<div class="mbg" id="mbg"></div>
+<div class="modal" id="applyModal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+  <button type="button" class="mclose" id="mclose" aria-label="닫기">&times;</button>
+  <p class="mtitle" id="mtitle">제휴 상담 신청</p>
+  <p class="msub">남겨주시면 담당자가 영업일 기준 하루 안에 연락드립니다.</p>
+      <form id="applyForm" novalidate>
+      <div class="row2">
+        <div class="field">
+          <label for="company">회사명 <span class="req">*</span></label>
+          <input id="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
+        </div>
+        <div class="field">
+          <label for="name">담당자명 <span class="req">*</span></label>
+          <input id="name" type="text" placeholder="홍길동" autocomplete="name" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="tel">연락처 <span class="req">*</span></label>
+          <input id="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="email">이메일 <span class="req">*</span></label>
+          <input id="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="type">상담 유형 <span class="req">*</span></label>
+          <select id="type">
+            <option>임직원 경조사 (결혼·조사 화환)</option>
+            <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
+            <option>승진·취임·개업 축하 (난·화분)</option>
+            <option>행사 · 공간 장식</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="volume">월 예상 물량</label>
+          <select id="volume">
+            <option>아직 모르겠습니다</option>
+            <option>월 10건 미만</option>
+            <option>월 10 – 30건</option>
+            <option>월 30건 이상</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="memo">상담 내용</label>
+        <textarea id="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
+      </div>
+      <label class="agree">
+        <input id="agree" type="checkbox" style="margin-top:5px;">
+        <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
+      </label>
+      <button id="submitBtn" class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
+      <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+      <p class="form-alt">전화가 편하시면 <a href="tel:1588-1360">1588-1360</a>으로 바로 주셔도 됩니다.</p>
+    </form>
+    <iframe name="gformSink" title="전송 처리용" style="display:none;width:0;height:0;border:0;"></iframe>
+</div>
 
 <script>
 (function(){
@@ -469,6 +523,44 @@ section{padding:clamp(72px,9vw,120px) 0;}
 
   var form = document.getElementById('applyForm');
   if(!form) return;
+
+  /* ── 레이어 팝업 ────────────────────────────────────────────────
+     이 페이지는 iframe에 콘텐츠 전체 높이로 얹히기 때문에 position:fixed
+     중앙 정렬을 쓰면 화면 밖에 뜬다. 문서 기준 absolute로 두고, 누른
+     버튼 위치에 맞춰 top을 계산한다. */
+  var bg = document.getElementById('mbg');
+  var modal = document.getElementById('applyModal');
+  var lastTrigger = null;
+
+  function docHeight(){
+    return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+  }
+  function openModal(trigger){
+    lastTrigger = trigger || null;
+    bg.style.height = docHeight() + 'px';
+    bg.classList.add('on');
+    modal.classList.add('on');
+    var anchor = trigger ? trigger.getBoundingClientRect().top + window.pageYOffset : 300;
+    var top = anchor - 60;
+    var maxTop = docHeight() - modal.offsetHeight - 40;
+    modal.style.top = Math.max(40, Math.min(top, maxTop)) + 'px';
+    var first = modal.querySelector('input, select, textarea');
+    if(first) first.focus();
+  }
+  function closeModal(){
+    bg.classList.remove('on');
+    modal.classList.remove('on');
+    if(lastTrigger) lastTrigger.focus();
+  }
+
+  document.querySelectorAll('[data-open-apply]').forEach(function(btn){
+    btn.addEventListener('click', function(){ openModal(btn); });
+  });
+  document.getElementById('mclose').addEventListener('click', closeModal);
+  bg.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('on')) closeModal();
+  });
   var btn = document.getElementById('submitBtn');
   var statusEl = document.getElementById('formStatus');
   var TEL  = /^[0-9()+\-\s]{9,20}$/;
@@ -532,6 +624,7 @@ section{padding:clamp(72px,9vw,120px) 0;}
       form.reset();
       btn.disabled = false;
       setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
+      setTimeout(function(){ if(modal.classList.contains('on')) closeModal(); }, 2600);
     }
     sink.addEventListener('load', finish);
     setTimeout(finish, 4000);   /* load가 안 잡히는 브라우저 대비 */
