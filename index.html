@@ -540,10 +540,13 @@ section{padding:clamp(72px,9vw,120px) 0;}
     bg.style.height = docHeight() + 'px';
     bg.classList.add('on');
     modal.classList.add('on');
-    var anchor = trigger ? trigger.getBoundingClientRect().top + window.pageYOffset : 300;
-    var top = anchor - 60;
+    /* 누른 버튼을 위아래 가운데 두도록 배치한다.
+       버튼 위치가 곧 사용자가 보고 있는 지점이기 때문. */
+    var r = trigger ? trigger.getBoundingClientRect() : null;
+    var center = r ? r.top + window.pageYOffset + r.height / 2 : 400;
+    var top = center - modal.offsetHeight / 2;
     var maxTop = docHeight() - modal.offsetHeight - 40;
-    modal.style.top = Math.max(40, Math.min(top, maxTop)) + 'px';
+    modal.style.top = Math.round(Math.max(40, Math.min(top, maxTop))) + 'px';
     var first = modal.querySelector('input, select, textarea');
     if(first) first.focus();
   }
