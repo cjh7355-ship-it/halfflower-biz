@@ -10,6 +10,9 @@
 | `index-embed.html` | 같은 디자인이되 스크립트 없음. 폼은 구글 폼 iframe. 스크립트를 지우는 CMS 페이지 편집기용 |
 | `blog.html` | 티스토리·다음 카페 등 에디터 붙여넣기용. 신청은 링크 버튼 |
 | `blog-iframe.html` | 위와 같으나 구글 폼을 iframe으로 embed. **src 값을 채워야 동작합니다** |
+| `page-1400.html` | 인라인 스타일 + 표 배치, 가로 1400px 고정. 붙여넣기용 |
+| `halfflower-proposal.pdf` | 기업제휴 제안서 A4 5페이지. 히어로의 내려받기 버튼이 가리킵니다 |
+| `proposal-source.html` | 위 PDF의 원본 HTML. 고칠 때 이 파일을 A4로 인쇄하면 됩니다 |
 | `img/01~05.jpg` | 상황별 상품 이미지. 블로그 버전이 URL로 참조합니다 |
 
 ## 상담 신청
@@ -47,7 +50,13 @@ forms.gle 단축주소는 iframe에서 동작하지 않습니다.
 - 한글 줄바꿈은 `word-break: keep-all`로 어절 단위 처리
 - `blog.html` 계열은 스타일을 전부 인라인, 스크립트 없음, 가변 폭
 
+## 제안서 PDF 다시 만들기
+
+`proposal-source.html`을 브라우저에서 열고 A4·여백 없음·배경 그래픽 켜기로
+인쇄하면 됩니다. 한글은 Noto Sans KR 기준이며, 페이지마다 297mm에 맞춰
+잘리지 않도록 짜여 있으니 내용을 늘릴 때는 넘침을 확인하세요.
+
 ## 남은 작업
 
-- `index.html`의 "제안서 내려받기 (PDF)" 버튼과 개인정보 "자세히 보기"가 빈 링크(`href="#"`)입니다.
 - `noindex, nofollow`가 걸려 있습니다. 검색 노출을 원하면 `index.html`의 robots 메타 한 줄을 지우세요.
+- `page-1400.html`과 `blog*.html`에는 제안서 내려받기 버튼이 없습니다.
