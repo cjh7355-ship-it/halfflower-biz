@@ -396,8 +396,6 @@ header{
       <dl class="contact-box">
         <dt>전화 상담</dt>
         <dd>1588-1360<small>평일 09:00 – 18:00</small></dd>
-        <dt>제휴 담당</dt>
-        <dd>이정욱 부장</dd>
         <dt>이메일</dt>
         <dd style="font-size:15px;">yyc888@halfflower.co.kr</dd>
       </dl>
@@ -539,7 +537,7 @@ header{
     .then(function(d){
       if(!d || !d.ok) throw new Error(d && d.error ? d.error : 'unknown');
       form.reset();
-      setStatus('접수됐습니다. 영업일 기준 하루 안에 이정욱 부장이 연락드리겠습니다.', 'ok');
+      setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
     })
     .catch(function(){
       setStatus('전송에 실패했습니다. 1588-1360 또는 yyc888@halfflower.co.kr로 연락 주세요.', 'err');
