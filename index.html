@@ -200,12 +200,13 @@ header{
 .row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
 .agree{display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--gray); margin:24px 0;}
 .agree a{color:var(--stem); text-decoration:underline;}
-.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
 .field.is-error input, .field.is-error select, .field.is-error textarea{border-color:#A63A32; background:#FCF6F5;}
 .agree.is-error span{color:#A63A32;}
 .form-status{margin:16px 0 0; font-size:14px; font-weight:600; min-height:21px;}
 .form-status.ok{color:var(--stem);}
 .form-status.err{color:#A63A32;}
+.form-alt{margin:12px 0 0; font-size:13px; color:var(--gray);}
+.form-alt a{color:var(--stem); font-weight:600;}
 .btn[disabled]{opacity:.55; cursor:default; transform:none;}
 
 </style>
@@ -406,27 +407,27 @@ header{
         <div class="row2">
           <div class="field">
             <label for="company">회사명 <span class="req">*</span></label>
-            <input id="company" name="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
+            <input id="company" type="text" placeholder="주식회사 하프플라워" autocomplete="organization" required>
           </div>
           <div class="field">
             <label for="name">담당자명 <span class="req">*</span></label>
-            <input id="name" name="name" type="text" placeholder="홍길동" autocomplete="name" required>
+            <input id="name" type="text" placeholder="홍길동" autocomplete="name" required>
           </div>
         </div>
         <div class="row2">
           <div class="field">
             <label for="tel">연락처 <span class="req">*</span></label>
-            <input id="tel" name="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
+            <input id="tel" type="tel" placeholder="010-0000-0000" autocomplete="tel" required>
           </div>
           <div class="field">
             <label for="email">이메일 <span class="req">*</span></label>
-            <input id="email" name="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
+            <input id="email" type="email" placeholder="name@company.co.kr" autocomplete="email" required>
           </div>
         </div>
         <div class="row2">
           <div class="field">
             <label for="type">상담 유형 <span class="req">*</span></label>
-            <select id="type" name="type">
+            <select id="type">
               <option>임직원 경조사 (결혼·조사 화환)</option>
               <option>직원 복지 (생일·입사·근속 꽃 선물)</option>
               <option>승진·취임·개업 축하 (난·화분)</option>
@@ -436,7 +437,7 @@ header{
           </div>
           <div class="field">
             <label for="volume">월 예상 물량</label>
-            <select id="volume" name="volume">
+            <select id="volume">
               <option>아직 모르겠습니다</option>
               <option>월 10건 미만</option>
               <option>월 10 – 30건</option>
@@ -446,30 +447,48 @@ header{
         </div>
         <div class="field">
           <label for="memo">상담 내용</label>
-          <textarea id="memo" name="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
-        </div>
-        <div class="hp" aria-hidden="true">
-          <label for="website">이 칸은 비워두세요</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          <textarea id="memo" placeholder="필요하신 품목, 예산, 결제 조건 등 편하게 적어주세요."></textarea>
         </div>
         <label class="agree">
-          <input id="agree" name="agree" type="checkbox" style="margin-top:5px;">
-          <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다. <a href="#">자세히 보기</a></span>
+          <input id="agree" type="checkbox" style="margin-top:5px;">
+          <span>개인정보 수집·이용에 동의합니다. 수집 항목은 회사명·담당자명·연락처·이메일이며, 제휴 상담 목적으로만 이용하고 90일 후 파기합니다.</span>
         </label>
         <button id="submitBtn" class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">상담 신청하기</button>
         <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-alt">전화가 편하시면 <a href="tel:1588-1360">1588-1360</a>으로 바로 주셔도 됩니다.</p>
       </form>
+      <iframe name="gformSink" title="전송 처리용" style="display:none;width:0;height:0;border:0;"></iframe>
     </div>
   </div>
 </section>
 
 
+
 <script>
 (function(){
-  /* ── 상담 신청 → 구글 스프레시트 ─────────────────────────
-     아래 ENDPOINT에 Google Apps Script 웹앱 배포 URL(.../exec)을 넣으세요.
-     스크립트 코드와 설정 순서는 halfflower-form.gs 파일에 있습니다. */
-  var ENDPOINT = "";
+  /* ── 상담 신청 → 구글 폼 ────────────────────────────────────────────
+     구글 폼: https://forms.gle/nujcdbRUTJp31zVW9
+
+     아래 두 값을 채우면 이 폼의 입력이 구글 폼으로 그대로 넘어갑니다.
+     구글 폼 → 우상단 ⋮ → "미리 채워진 링크 가져오기" → 각 칸에 아무 값이나
+     넣고 [링크 생성] → 나오는 주소에 필요한 값이 전부 들어 있습니다.
+
+       https://docs.google.com/forms/d/e/<FORM_ID>/viewform?usp=pp_url
+         &entry.1111111=회사명값&entry.2222222=담당자값&...
+
+     비워두면 신청 버튼이 구글 폼을 새 창으로 여는 방식으로 동작합니다. */
+  var FORM_ID = "";
+  var ENTRY = {
+    company: "",   // 회사명
+    name:    "",   // 담당자명
+    tel:     "",   // 연락처
+    email:   "",   // 이메일
+    type:    "",   // 상담 유형
+    volume:  "",   // 월 예상 물량
+    memo:    "",   // 상담 내용
+    agree:   ""    // 개인정보 수집·이용 동의
+  };
+  var FALLBACK_URL = "https://forms.gle/nujcdbRUTJp31zVW9";
 
   var form = document.getElementById('applyForm');
   if(!form) return;
@@ -483,19 +502,21 @@ header{
     statusEl.className = 'form-status' + (kind ? ' ' + kind : '');
   }
   function wrapOf(el){ return el.closest('.field') || el.closest('.agree'); }
+  function val(id){ return document.getElementById(id).value.trim(); }
 
   function validate(){
     form.querySelectorAll('.is-error').forEach(function(n){ n.classList.remove('is-error'); });
-    var f = form.elements, bad = null;
+    var bad = null;
     [['company','회사명을 입력해 주세요.'],
      ['name','담당자명을 입력해 주세요.'],
      ['tel','연락처를 입력해 주세요.'],
      ['email','이메일을 입력해 주세요.']].forEach(function(pair){
-      if(!bad && !f[pair[0]].value.trim()) bad = [f[pair[0]], pair[1]];
+      if(!bad && !val(pair[0])) bad = [document.getElementById(pair[0]), pair[1]];
     });
-    if(!bad && !TEL.test(f.tel.value.trim()))    bad = [f.tel,   '연락처 형식을 확인해 주세요.'];
-    if(!bad && !MAIL.test(f.email.value.trim())) bad = [f.email, '이메일 형식을 확인해 주세요.'];
-    if(!bad && !f.agree.checked)                 bad = [f.agree, '개인정보 수집·이용에 동의해 주세요.'];
+    if(!bad && !TEL.test(val('tel')))    bad = [document.getElementById('tel'),   '연락처 형식을 확인해 주세요.'];
+    if(!bad && !MAIL.test(val('email'))) bad = [document.getElementById('email'), '이메일 형식을 확인해 주세요.'];
+    if(!bad && !document.getElementById('agree').checked)
+      bad = [document.getElementById('agree'), '개인정보 수집·이용에 동의해 주세요.'];
     if(bad){
       var w = wrapOf(bad[0]);
       if(w) w.classList.add('is-error');
@@ -506,43 +527,65 @@ header{
     return true;
   }
 
+  /* 구글 폼은 응답을 읽을 수 없게 막아두므로, 숨긴 iframe으로 POST하고
+     그 iframe의 load 이벤트를 전송 완료 신호로 씁니다. */
+  function sendToGoogleForm(data){
+    var sink = document.getElementsByName('gformSink')[0];
+    var f = document.createElement('form');
+    f.action = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
+    f.method = 'POST';
+    f.target = 'gformSink';
+    f.style.display = 'none';
+    Object.keys(data).forEach(function(key){
+      if(!ENTRY[key] || !data[key]) return;
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = ENTRY[key];
+      input.value = data[key];
+      f.appendChild(input);
+    });
+    document.body.appendChild(f);
+
+    var done = false;
+    function finish(){
+      if(done) return;
+      done = true;
+      sink.removeEventListener('load', finish);
+      document.body.removeChild(f);
+      form.reset();
+      btn.disabled = false;
+      setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
+    }
+    sink.addEventListener('load', finish);
+    setTimeout(finish, 4000);   /* load가 안 잡히는 브라우저 대비 */
+    f.submit();
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if(!validate()) return;
-    if(!ENDPOINT){
-      setStatus('접수 주소가 아직 설정되지 않았습니다. 1588-1360으로 전화 주시면 바로 도와드리겠습니다.', 'err');
+
+    var data = {
+      company: val('company'),
+      name:    val('name'),
+      tel:     val('tel'),
+      email:   val('email'),
+      type:    document.getElementById('type').value,
+      volume:  document.getElementById('volume').value,
+      memo:    val('memo'),
+      agree:   '동의합니다'
+    };
+
+    if(!FORM_ID || !ENTRY.company){
+      /* 아직 연결 전 — 구글 폼을 새 창으로 열어 직접 작성하게 한다 */
+      window.open(FALLBACK_URL, '_blank', 'noopener');
+      setStatus('새 창에서 신청서를 열었습니다. 창이 뜨지 않으면 팝업 차단을 확인해 주세요.', '');
       return;
     }
-    var f = form.elements;
-    var payload = {
-      company: f.company.value.trim(),
-      name:    f.name.value.trim(),
-      tel:     f.tel.value.trim(),
-      email:   f.email.value.trim(),
-      type:    f.type.value,
-      volume:  f.volume.value,
-      memo:    f.memo.value.trim(),
-      website: f.website.value,
-      page:    location.href
-    };
+
     btn.disabled = true;
     setStatus('보내는 중입니다…', '');
-    fetch(ENDPOINT, {
-      method: 'POST',
-      /* text/plain 이면 프리플라이트 없이 전송됩니다 (Apps Script는 본문을 그대로 읽습니다) */
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if(!d || !d.ok) throw new Error(d && d.error ? d.error : 'unknown');
-      form.reset();
-      setStatus('접수됐습니다. 영업일 기준 하루 안에 담당자가 연락드리겠습니다.', 'ok');
-    })
-    .catch(function(){
-      setStatus('전송에 실패했습니다. 1588-1360 또는 yyc888@halfflower.co.kr로 연락 주세요.', 'err');
-    })
-    .then(function(){ btn.disabled = false; });
+    sendToGoogleForm(data);
   });
 })();
 </script>
