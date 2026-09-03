@@ -477,6 +477,8 @@ section{padding:clamp(72px,9vw,120px) 0;}
 
 
 
+<iframe name="gformSink" title="전송 처리용" style="display:none;width:0;height:0;border:0;"></iframe>
+
 <div class="mbg" id="mbg"></div>
 <div class="modal" id="applyModal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
   <button type="button" class="mclose" id="mclose" aria-label="닫기">&times;</button>
@@ -636,6 +638,13 @@ section{padding:clamp(72px,9vw,120px) 0;}
        그 iframe의 load 이벤트를 전송 완료 신호로 쓴다. */
     function send(data){
       var sink = document.getElementsByName('gformSink')[0];
+      if(!sink){
+        sink = document.createElement('iframe');
+        sink.name = 'gformSink';
+        sink.title = '전송 처리용';
+        sink.style.cssText = 'display:none;width:0;height:0;border:0;';
+        document.body.appendChild(sink);
+      }
       var relay = document.createElement('form');
       relay.action = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
       relay.method = 'POST';
@@ -677,10 +686,15 @@ section{padding:clamp(72px,9vw,120px) 0;}
       }
       btn.disabled = true;
       setStatus('보내는 중입니다…', '');
-      send({
-        company: val('company'), name: val('name'), tel: val('tel'), email: val('email'),
-        type: f.type.value, volume: f.volume.value, memo: val('memo'), agree: '동의합니다'
-      });
+      try {
+        send({
+          company: val('company'), name: val('name'), tel: val('tel'), email: val('email'),
+          type: f.type.value, volume: f.volume.value, memo: val('memo'), agree: '동의합니다'
+        });
+      } catch (err) {
+        btn.disabled = false;
+        setStatus('전송에 실패했습니다. 1588-1360 또는 yyc888@halfflower.co.kr로 연락 주세요.', 'err');
+      }
     });
   }
 
